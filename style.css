@@ -1,0 +1,634 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+
+body{
+    background:#111;
+    color:white;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+
+/* HEADER */
+
+header{
+    width:100%;
+    padding:25px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#000;
+}
+
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:white;
+}
+
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+    font-size:17px;
+}
+
+
+nav a:hover{
+    color:#c59d5f;
+}
+
+
+
+/* HERO */
+
+.hero{
+    height:90vh;
+    background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+    url("slike/barber.jpg");
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    align-items:center;
+    padding-left:10%;
+}
+
+
+.hero-text{
+    max-width:650px;
+}
+
+
+.hero h1{
+    font-size:70px;
+    line-height:1.1;
+    margin-bottom:25px;
+}
+
+
+.hero p{
+    font-size:22px;
+    color:#ddd;
+    margin-bottom:35px;
+}
+
+
+.button{
+    display:inline-block;
+    background:#c59d5f;
+    color:black;
+    padding:16px 35px;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+
+.button:hover{
+    background:white;
+}
+
+
+
+/* O NAMA */
+
+.about{
+    padding:80px 15%;
+    text-align:center;
+}
+
+
+.about h2{
+    font-size:45px;
+    margin-bottom:30px;
+}
+
+
+.about p{
+    max-width:700px;
+    margin:auto;
+    color:#ccc;
+    font-size:18px;
+}
+
+
+
+/* USLUGE */
+
+.services{
+    padding:80px 8%;
+    text-align:center;
+}
+
+
+.services h2{
+    font-size:45px;
+    margin-bottom:40px;
+}
+
+
+.cards{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+
+.card{
+    background:#181818;
+    width:300px;
+    padding:40px 25px;
+    border-radius:15px;
+    border:1px solid #333;
+    transition:.3s;
+}
+
+
+.card:hover{
+    transform:translateY(-10px);
+    border-color:#c59d5f;
+}
+
+
+.card h3{
+    font-size:25px;
+    margin-bottom:15px;
+}
+
+
+.card p{
+    color:#aaa;
+}
+
+
+
+/* CENOVNIK */
+
+.cenovnik{
+    padding:80px 15%;
+    text-align:center;
+}
+
+
+.cenovnik h1{
+    font-size:50px;
+    margin-bottom:50px;
+}
+
+
+.price-list{
+    background:#181818;
+    padding:20px 40px;
+    border-radius:15px;
+}
+
+
+.price-item{
+    display:flex;
+    justify-content:space-between;
+    padding:25px 0;
+    border-bottom:1px solid #333;
+}
+
+
+.price-item:last-child{
+    border:none;
+}
+
+
+.price-item span{
+    color:#c59d5f;
+    font-size:25px;
+    font-weight:bold;
+}
+
+
+
+/* REZERVACIJA */
+
+.reservation{
+    padding:80px 8%;
+    text-align:center;
+}
+
+
+.reservation h1{
+    font-size:45px;
+    margin-bottom:40px;
+}
+
+
+form{
+    max-width:500px;
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+
+input,
+select{
+    padding:15px;
+    border-radius:8px;
+    border:none;
+    font-size:16px;
+}
+
+
+button{
+    padding:15px;
+    background:#c59d5f;
+    color:black;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+
+/* KALENDAR */
+
+.calendar{
+    background:#181818;
+    padding:20px;
+    border-radius:15px;
+}
+
+
+.calendar-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+
+.calendar-header button{
+    width:45px;
+}
+
+
+.weekdays,
+.calendar-days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:10px;
+}
+
+
+.weekdays div{
+    font-weight:bold;
+}
+
+
+.calendar-days button{
+    background:#222;
+    color:white;
+    border:1px solid #333;
+    padding:12px;
+    border-radius:8px;
+}
+
+
+.calendar-days button:hover{
+    background:#c59d5f;
+    color:black;
+}
+
+
+.calendar-days .selected{
+    background:#c59d5f;
+    color:black;
+}
+
+
+
+/* VREMENA */
+
+.times{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:20px;
+}
+
+
+.time-btn{
+    width:90px;
+    background:#222;
+    color:white;
+}
+
+
+.time-btn.active{
+    background:#c59d5f;
+    color:black;
+}
+
+
+
+/* FOOTER */
+
+footer{
+    background:#000;
+    text-align:center;
+    padding:20px;
+    margin-top:auto;
+}
+
+/* KONTAKT */
+
+.contact{
+    padding:80px 8%;
+    text-align:center;
+    flex:1;
+}
+
+
+.contact h1{
+    font-size:50px;
+    margin-bottom:50px;
+}
+
+
+
+.contact-box{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+
+
+.contact-card{
+    background:#181818;
+    width:300px;
+    padding:40px 25px;
+    border-radius:15px;
+    border:1px solid #333;
+}
+
+
+
+.contact-card h2{
+    color:#c59d5f;
+    margin-bottom:20px;
+}
+
+
+
+.contact-card p{
+    color:#ddd;
+    line-height:1.7;
+}
+
+
+
+.contact-card a{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 25px;
+    background:#c59d5f;
+    color:black;
+    text-decoration:none;
+    border-radius:25px;
+    font-weight:bold;
+}
+
+/* GALERIJA */
+
+.gallery{
+    padding:70px 8%;
+    text-align:center;
+}
+
+
+.gallery h1{
+    font-size:45px;
+    margin-bottom:40px;
+}
+
+
+
+.gallery-box{
+    display:grid;
+    grid-template-columns:repeat(3, 250px);
+    justify-content:center;
+    column-gap:45px;
+    row-gap:45px;
+}
+
+
+.gallery-card{
+    width:250px;
+    height:250px;
+    overflow:hidden;
+    border-radius:15px;
+    border:1px solid #333;
+    background:#181818;
+}
+
+
+
+.gallery-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.4s;
+}
+
+
+
+.gallery-card:hover img{
+    transform:scale(1.08);
+}
+
+/* TELEFON RESPONSIVE */
+
+@media(max-width:768px){
+
+
+    /* HEADER */
+
+    header{
+        flex-direction:column;
+        padding:20px;
+        gap:20px;
+    }
+
+
+    .logo{
+        font-size:24px;
+    }
+
+
+    nav{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+
+    nav a{
+        margin-left:0;
+        font-size:15px;
+    }
+
+
+
+    /* HERO */
+
+    .hero{
+        height:70vh;
+        padding:20px;
+        text-align:center;
+        justify-content:center;
+    }
+
+
+    .hero h1{
+        font-size:40px;
+    }
+
+
+    .hero p{
+        font-size:18px;
+    }
+
+
+
+    /* SEKCIJE */
+
+    .about,
+    .services,
+    .cenovnik,
+    .reservation,
+    .contact,
+    .gallery{
+        padding:50px 20px;
+    }
+
+
+
+    h2,
+    .services h2,
+    .about h2{
+        font-size:35px;
+    }
+
+
+
+    /* KARTICE */
+
+    .cards{
+        flex-direction:column;
+        align-items:center;
+    }
+
+
+    .card{
+        width:100%;
+        max-width:330px;
+    }
+
+
+
+    /* CENOVNIK */
+
+    .price-list{
+        padding:20px;
+    }
+
+
+    .price-item{
+        flex-direction:column;
+        gap:10px;
+        text-align:center;
+    }
+
+
+
+    /* REZERVACIJA */
+
+    form{
+        width:100%;
+    }
+
+
+    .calendar{
+        width:100%;
+    }
+
+
+    .weekdays,
+    .calendar-days{
+        gap:5px;
+    }
+
+
+    .calendar-days button{
+        padding:8px;
+        font-size:14px;
+    }
+
+
+
+    /* VREMENA */
+
+    .time-btn{
+        width:75px;
+        padding:10px;
+    }
+
+
+
+    /* GALERIJA */
+
+    .gallery-box{
+        grid-template-columns:1fr;
+        gap:25px;
+    }
+
+
+    .gallery-card{
+        width:100%;
+        max-width:300px;
+        height:300px;
+        margin:auto;
+    }
+
+
+
+    /* KONTAKT */
+
+    .contact-box{
+        flex-direction:column;
+        align-items:center;
+    }
+
+
+    .contact-card{
+        width:100%;
+        max-width:330px;
+    }
+
+
+}

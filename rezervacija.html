@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezervacija - Barber Studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        Barber Studio
+    </div>
+
+
+    <nav>
+        <a href="index.html">Početna</a>
+        <a href="cenovnik.html">Cenovnik</a>
+        <a href="galerija.html">Galerija</a>
+        <a href="rezervacija.html">Rezervacija</a>
+        <a href="kontakt.html">Kontakt</a>
+    </nav>
+
+</header>
+
+
+
+
+<section class="reservation">
+
+
+<h1>Rezerviši termin</h1>
+
+
+
+<form id="bookingForm">
+
+
+<input
+id="name"
+type="text"
+placeholder="Ime i prezime"
+required>
+
+
+
+<input
+id="phone"
+type="tel"
+placeholder="Broj telefona"
+required>
+
+
+
+<select id="service" required>
+
+<option value="">
+Izaberi uslugu
+</option>
+
+
+<option>
+Klasično šišanje - 700 DIN
+</option>
+
+
+<option>
+Buzz Cut - 800 DIN
+</option>
+
+
+<option>
+Fade Cut - 1000 DIN
+</option>
+
+
+<option>
+Dečije šišanje - 500 DIN
+</option>
+
+
+<option>
+Šišanje penzioner - 500 DIN
+</option>
+
+
+</select>
+
+
+
+
+
+<label>
+Izaberi datum
+</label>
+
+
+<div class="calendar">
+
+    <div class="calendar-header">
+        <button type="button" onclick="prevMonth()">◀</button>
+
+        <h3 id="monthYear"></h3>
+
+        <button type="button" onclick="nextMonth()">▶</button>
+    </div>
+
+
+    <div class="weekdays">
+
+        <div>Pon</div>
+        <div>Uto</div>
+        <div>Sre</div>
+        <div>Čet</div>
+        <div>Pet</div>
+        <div>Sub</div>
+        <div>Ned</div>
+
+    </div>
+
+
+    <div id="calendarDays" class="calendar-days"></div>
+
+
+</div>
+
+
+<input type="hidden" id="date">
+
+
+
+
+<h3>
+Izaberi vreme
+</h3>
+
+
+
+<div id="times" class="times">
+
+<p>
+Prvo izaberite datum
+</p>
+
+</div>
+
+
+
+
+
+<button type="submit">
+Rezerviši termin
+</button>
+
+
+
+</form>
+
+
+</section>
+
+
+
+
+
+<footer>
+
+<p>
+© 2026 Barber Studio | Telefon: 060/000-0000
+</p>
+
+</footer>
+
+
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
