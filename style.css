@@ -632,3 +632,187 @@ footer{
 
 
 }
+
+/* =========================
+   MOJE REZERVACIJE
+========================= */
+
+.my-reservation{
+    padding:80px 8%;
+    text-align:center;
+    flex:1;
+}
+
+
+.my-reservation h1{
+    font-size:50px;
+    margin-bottom:50px;
+}
+
+
+/* KARTICA REZERVACIJE */
+
+.my-reservation-card{
+    background:#181818;
+    width:100%;
+    max-width:600px;
+    margin:auto;
+    padding:40px;
+    border-radius:15px;
+    border:1px solid #333;
+    text-align:left;
+}
+
+
+.my-reservation-card:hover{
+    border-color:#c59d5f;
+}
+
+
+/* NASLOV */
+
+.my-reservation-card h2{
+    text-align:center;
+    color:#c59d5f;
+    font-size:28px;
+    margin-bottom:30px;
+}
+
+
+/* PODACI */
+
+.my-reservation-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #333;
+    gap:20px;
+}
+
+
+.my-reservation-item:last-child{
+    border-bottom:none;
+}
+
+
+.my-reservation-item span{
+    color:#999;
+    font-size:15px;
+}
+
+
+.my-reservation-item strong{
+    color:white;
+    font-size:17px;
+    text-align:right;
+}
+
+
+/* VREME */
+
+.my-reservation-time{
+    color:#c59d5f !important;
+    font-size:24px !important;
+}
+
+
+/* STATUS */
+
+.my-reservation-status{
+    text-align:center;
+    margin-top:30px;
+    padding:12px;
+    background:#111;
+    border:1px solid #c59d5f;
+    border-radius:8px;
+    color:#c59d5f;
+    font-weight:bold;
+}
+
+
+/* DUGME */
+
+.my-reservation-button{
+    display:block;
+    width:max-content;
+    margin:30px auto 0;
+    padding:14px 30px;
+    background:#c59d5f;
+    color:black;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+
+.my-reservation-button:hover{
+    background:white;
+}
+
+
+/* NEMA REZERVACIJE */
+
+.no-reservation{
+    background:#181818;
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    padding:50px 30px;
+    border-radius:15px;
+    border:1px solid #333;
+    text-align:center;
+}
+
+
+.no-reservation h2{
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+
+.no-reservation p{
+    color:#aaa;
+    margin-bottom:30px;
+}
+
+
+/* TELEFON */
+
+@media(max-width:768px){
+
+    .my-reservation{
+        padding:50px 20px;
+    }
+
+
+    .my-reservation h1{
+        font-size:35px;
+        margin-bottom:35px;
+    }
+
+
+    .my-reservation-card{
+        padding:25px 20px;
+    }
+
+
+    .my-reservation-item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:7px;
+    }
+
+
+    .my-reservation-item strong{
+        text-align:left;
+    }
+
+
+    .my-reservation-button{
+        width:100%;
+        text-align:center;
+    }
+
+}
