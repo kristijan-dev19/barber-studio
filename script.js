@@ -4,19 +4,200 @@ let selectedTime = "";
 
 
 /* =========================
+   PODRAZUMEVANE USLUGE
+========================= */
+
+const defaultServices = [
+
+    {
+        id: 1,
+        name: "Klasično šišanje",
+        price: 700
+    },
+
+    {
+        id: 2,
+        name: "Buzz Cut",
+        price: 800
+    },
+
+    {
+        id: 3,
+        name: "Fade Cut",
+        price: 1000
+    },
+
+    {
+        id: 4,
+        name: "Dečije šišanje",
+        price: 500
+    },
+
+    {
+        id: 5,
+        name: "Šišanje penzioner",
+        price: 500
+    }
+
+];
+
+
+/* =========================
+   UČITAVANJE USLUGA
+========================= */
+
+function getServices() {
+
+    try {
+
+        const data =
+            localStorage.getItem("barberServices");
+
+        if (!data) {
+
+            localStorage.setItem(
+                "barberServices",
+                JSON.stringify(defaultServices)
+            );
+
+            return defaultServices;
+
+        }
+
+
+        const services =
+            JSON.parse(data);
+
+
+        if (!Array.isArray(services)) {
+
+            return defaultServices;
+
+        }
+
+
+        return services;
+
+    } catch (error) {
+
+        return defaultServices;
+
+    }
+
+}
+
+
+/* =========================
+   PRIKAZ USLUGA U REZERVACIJI
+========================= */
+
+function loadServices() {
+
+    const serviceSelect =
+        document.getElementById("service");
+
+
+    if (!serviceSelect) {
+        return;
+    }
+
+
+    const services =
+        getServices();
+
+
+    serviceSelect.innerHTML = `
+        <option value="">
+            Izaberi uslugu
+        </option>
+    `;
+
+
+    services.forEach(function(service) {
+
+        const option =
+            document.createElement("option");
+
+
+        option.value =
+            service.name +
+            " - " +
+            service.price +
+            " DIN";
+
+
+        option.textContent =
+            service.name +
+            " - " +
+            service.price +
+            " DIN";
+
+
+        serviceSelect.appendChild(option);
+
+    });
+
+}
+
+
+/* =========================
+   CENA IZABRANE USLUGE
+========================= */
+
+function getServicePrice(serviceText) {
+
+    const services =
+        getServices();
+
+
+    const service =
+        services.find(function(item) {
+
+            return (
+                serviceText.startsWith(
+                    item.name + " - "
+                )
+            );
+
+        });
+
+
+    if (service) {
+
+        return Number(service.price) || 0;
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* =========================
    KALENDAR
 ========================= */
 
 function renderCalendar() {
 
-    let year = currentDate.getFullYear();
-    let month = currentDate.getMonth();
+    let year =
+        currentDate.getFullYear();
+
+    let month =
+        currentDate.getMonth();
+
 
     let monthYear =
-        document.getElementById("monthYear");
+        document.getElementById(
+            "monthYear"
+        );
+
 
     let calendarDays =
-        document.getElementById("calendarDays");
+        document.getElementById(
+            "calendarDays"
+        );
+
 
     if (!monthYear || !calendarDays) {
         return;
@@ -24,6 +205,7 @@ function renderCalendar() {
 
 
     let months = [
+
         "Januar",
         "Februar",
         "Mart",
@@ -36,18 +218,25 @@ function renderCalendar() {
         "Oktobar",
         "Novembar",
         "Decembar"
+
     ];
 
 
     monthYear.textContent =
-        months[month] + " " + year;
+        months[month] +
+        " " +
+        year;
 
 
     calendarDays.innerHTML = "";
 
 
     let firstDay =
-        new Date(year, month, 1).getDay();
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
 
 
     let daysInMonth =
@@ -67,12 +256,21 @@ function renderCalendar() {
 
     /* Prazna mesta */
 
-    for (let i = 1; i < firstDay; i++) {
+    for (
+        let i = 1;
+        i < firstDay;
+        i++
+    ) {
 
         let empty =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        calendarDays.appendChild(empty);
+
+        calendarDays.appendChild(
+            empty
+        );
 
     }
 
@@ -86,7 +284,9 @@ function renderCalendar() {
     ) {
 
         let button =
-            document.createElement("button");
+            document.createElement(
+                "button"
+            );
 
 
         button.type = "button";
@@ -95,15 +295,20 @@ function renderCalendar() {
 
 
         let fullDate =
-            year + "-" +
-            String(month + 1).padStart(2, "0") +
+            year +
+            "-" +
+            String(
+                month + 1
+            ).padStart(2, "0") +
             "-" +
             String(day).padStart(2, "0");
 
 
         /* Provera prošlog datuma */
 
-        let today = new Date();
+        let today =
+            new Date();
+
 
         today.setHours(
             0,
@@ -146,13 +351,15 @@ function renderCalendar() {
                 .querySelectorAll(
                     ".calendar-days button"
                 )
-                .forEach(function (btn) {
+                .forEach(
+                    function (btn) {
 
-                    btn.classList.remove(
-                        "selected"
-                    );
+                        btn.classList.remove(
+                            "selected"
+                        );
 
-                });
+                    }
+                );
 
 
             button.classList.add(
@@ -160,14 +367,18 @@ function renderCalendar() {
             );
 
 
-            selectedDate = fullDate;
+            selectedDate =
+                fullDate;
 
-            selectedTime = "";
+
+            selectedTime =
+                "";
 
 
             document.getElementById(
                 "date"
-            ).value = fullDate;
+            ).value =
+                fullDate;
 
 
             showTimes();
@@ -175,7 +386,9 @@ function renderCalendar() {
         };
 
 
-        calendarDays.appendChild(button);
+        calendarDays.appendChild(
+            button
+        );
 
     }
 
@@ -188,7 +401,9 @@ function renderCalendar() {
 
 function prevMonth() {
 
-    let today = new Date();
+    let today =
+        new Date();
+
 
     today.setDate(1);
 
@@ -240,37 +455,6 @@ function nextMonth() {
 
 
 /* =========================
-   CENA USLUGE
-========================= */
-
-function getServicePrice(service) {
-
-    if (service.includes("1000")) {
-        return 1000;
-    }
-
-
-    if (service.includes("800")) {
-        return 800;
-    }
-
-
-    if (service.includes("700")) {
-        return 700;
-    }
-
-
-    if (service.includes("500")) {
-        return 500;
-    }
-
-
-    return 0;
-
-}
-
-
-/* =========================
    VREMENA
    SVAKIH 30 MINUTA
 ========================= */
@@ -278,11 +462,15 @@ function getServicePrice(service) {
 function showTimes() {
 
     let date =
-        document.getElementById("date").value;
+        document.getElementById(
+            "date"
+        ).value;
 
 
     let times =
-        document.getElementById("times");
+        document.getElementById(
+            "times"
+        );
 
 
     if (!times) {
@@ -323,7 +511,10 @@ function showTimes() {
        15:00 - 19:30
     ========================= */
 
-    if (day >= 1 && day <= 5) {
+    if (
+        day >= 1 &&
+        day <= 5
+    ) {
 
         workingTimes = [
 
@@ -418,6 +609,7 @@ function showTimes() {
 
     let reservations = [];
 
+
     try {
 
         reservations =
@@ -438,128 +630,167 @@ function showTimes() {
        ISPIS TERMINA
     ========================= */
 
-    workingTimes.forEach(function (time) {
+    workingTimes.forEach(
+        function (time) {
 
-        let btn =
-            document.createElement("button");
-
-
-        btn.type = "button";
-
-        btn.className = "time-btn";
-
-        btn.textContent = time;
+            let btn =
+                document.createElement(
+                    "button"
+                );
 
 
-        /* =========================
-           PROVERA ZAUZETOG TERMINA
-        ========================= */
+            btn.type = "button";
 
-        let isBooked =
-            reservations.some(
-                function (reservation) {
-
-                    return (
-                        reservation.date === date &&
-                        reservation.time === time &&
-                        reservation.status !== "Otkazano"
-                    );
-
-                }
-            );
-
-
-        if (isBooked) {
-
-            btn.disabled = true;
+            btn.className =
+                "time-btn";
 
             btn.textContent =
-                time + " - Zauzeto";
-
-            btn.style.opacity = "0.4";
-
-            btn.style.cursor =
-                "not-allowed";
-
-        }
+                time;
 
 
-        /* =========================
-           PROVERA PROŠLOG VREMENA
-           SAMO ZA DANAS
-        ========================= */
+            /* =========================
+               PROVERA ZAUZETOG TERMINA
+            ========================= */
 
-        let now = new Date();
+            let isBooked =
+                reservations.some(
+                    function (
+                        reservation
+                    ) {
 
+                        return (
 
-        let todayString =
-            now.getFullYear() +
-            "-" +
-            String(
-                now.getMonth() + 1
-            ).padStart(2, "0") +
-            "-" +
-            String(
-                now.getDate()
-            ).padStart(2, "0");
+                            reservation.date ===
+                            date
 
+                            &&
 
-        if (
-            date === todayString &&
-            time <=
-            now.toTimeString().slice(0, 5)
-        ) {
+                            reservation.time ===
+                            time
 
-            btn.disabled = true;
+                            &&
 
-            btn.textContent =
-                time + " - Prošlo";
+                            reservation.status !==
+                            "Otkazano"
 
-            btn.style.opacity = "0.3";
+                        );
 
-            btn.style.cursor =
-                "not-allowed";
-
-        }
+                    }
+                );
 
 
-        /* =========================
-           IZBOR TERMINA
-        ========================= */
+            if (isBooked) {
 
-        btn.onclick = function () {
+                btn.disabled = true;
 
-            if (btn.disabled) {
-                return;
+                btn.textContent =
+                    time +
+                    " - Zauzeto";
+
+                btn.style.opacity =
+                    "0.4";
+
+                btn.style.cursor =
+                    "not-allowed";
+
             }
 
 
-            document
-                .querySelectorAll(
-                    ".time-btn"
-                )
-                .forEach(function (b) {
+            /* =========================
+               PROVERA PROŠLOG VREMENA
+            ========================= */
 
-                    b.classList.remove(
-                        "active"
+            let now =
+                new Date();
+
+
+            let todayString =
+
+                now.getFullYear() +
+                "-" +
+
+                String(
+                    now.getMonth() + 1
+                ).padStart(2, "0") +
+
+                "-" +
+
+                String(
+                    now.getDate()
+                ).padStart(2, "0");
+
+
+            if (
+
+                date ===
+                todayString
+
+                &&
+
+                time <=
+                now.toTimeString()
+                    .slice(0, 5)
+
+            ) {
+
+                btn.disabled = true;
+
+                btn.textContent =
+                    time +
+                    " - Prošlo";
+
+                btn.style.opacity =
+                    "0.3";
+
+                btn.style.cursor =
+                    "not-allowed";
+
+            }
+
+
+            /* =========================
+               IZBOR TERMINA
+            ========================= */
+
+            btn.onclick = function () {
+
+                if (btn.disabled) {
+                    return;
+                }
+
+
+                document
+                    .querySelectorAll(
+                        ".time-btn"
+                    )
+                    .forEach(
+                        function (b) {
+
+                            b.classList.remove(
+                                "active"
+                            );
+
+                        }
                     );
 
-                });
+
+                btn.classList.add(
+                    "active"
+                );
 
 
-            btn.classList.add(
-                "active"
+                selectedTime =
+                    time;
+
+            };
+
+
+            times.appendChild(
+                btn
             );
 
-
-            selectedTime = time;
-
-        };
-
-
-        times.appendChild(btn);
-
-    });
+        }
+    );
 
 }
 
@@ -583,39 +814,43 @@ if (bookingForm) {
             event.preventDefault();
 
 
-            /* =========================
-               PODACI
-            ========================= */
+            /* PODACI */
 
             let name =
                 document
-                    .getElementById("name")
+                    .getElementById(
+                        "name"
+                    )
                     .value
                     .trim();
 
 
             let phone =
                 document
-                    .getElementById("phone")
+                    .getElementById(
+                        "phone"
+                    )
                     .value
                     .trim();
 
 
             let service =
                 document
-                    .getElementById("service")
+                    .getElementById(
+                        "service"
+                    )
                     .value;
 
 
             let date =
                 document
-                    .getElementById("date")
+                    .getElementById(
+                        "date"
+                    )
                     .value;
 
 
-            /* =========================
-               PROVERE
-            ========================= */
+            /* PROVERE */
 
             if (!name) {
 
@@ -672,11 +907,10 @@ if (bookingForm) {
             }
 
 
-            /* =========================
-               UČITAJ REZERVACIJE
-            ========================= */
+            /* UČITAJ REZERVACIJE */
 
             let reservations = [];
+
 
             try {
 
@@ -694,20 +928,29 @@ if (bookingForm) {
             }
 
 
-            /* =========================
-               PONOVNA PROVERA
-               DA NE DOĐE DO DUPLE
-               REZERVACIJE
-            ========================= */
+            /* PONOVNA PROVERA */
 
             let alreadyBooked =
                 reservations.some(
-                    function (reservation) {
+                    function (
+                        reservation
+                    ) {
 
                         return (
-                            reservation.date === date &&
-                            reservation.time === selectedTime &&
-                            reservation.status !== "Otkazano"
+
+                            reservation.date ===
+                            date
+
+                            &&
+
+                            reservation.time ===
+                            selectedTime
+
+                            &&
+
+                            reservation.status !==
+                            "Otkazano"
+
                         );
 
                     }
@@ -728,9 +971,7 @@ if (bookingForm) {
             }
 
 
-            /* =========================
-               CENA
-            ========================= */
+            /* CENA */
 
             let price =
                 getServicePrice(
@@ -738,48 +979,49 @@ if (bookingForm) {
                 );
 
 
-            /* =========================
-               NOVA REZERVACIJA
-            ========================= */
+            /* NOVA REZERVACIJA */
 
             let newReservation = {
 
-                id: Date.now(),
+                id:
+                    Date.now(),
 
-                name: name,
+                name:
+                    name,
 
-                phone: phone,
+                phone:
+                    phone,
 
-                service: service,
+                service:
+                    service,
 
-                price: price,
+                price:
+                    price,
 
-                date: date,
+                date:
+                    date,
 
-                time: selectedTime,
+                time:
+                    selectedTime,
 
-                /* ODMAH POTVRĐENO */
-
-                status: "Potvrđeno",
+                status:
+                    "Potvrđeno",
 
                 createdAt:
-                    new Date().toISOString()
+                    new Date()
+                        .toISOString()
 
             };
 
 
-            /* =========================
-               DODAVANJE
-            ========================= */
+            /* DODAVANJE */
 
             reservations.push(
                 newReservation
             );
 
 
-            /* =========================
-               ČUVANJE
-            ========================= */
+            /* ČUVANJE */
 
             localStorage.setItem(
                 "reservations",
@@ -789,9 +1031,7 @@ if (bookingForm) {
             );
 
 
-            /* =========================
-               PORUKA
-            ========================= */
+            /* PORUKA */
 
             alert(
 
@@ -813,9 +1053,7 @@ if (bookingForm) {
             );
 
 
-            /* =========================
-               RESET FORME
-            ========================= */
+            /* RESET */
 
             bookingForm.reset();
 
@@ -829,13 +1067,15 @@ if (bookingForm) {
                 .querySelectorAll(
                     ".calendar-days button"
                 )
-                .forEach(function (btn) {
+                .forEach(
+                    function (btn) {
 
-                    btn.classList.remove(
-                        "selected"
-                    );
+                        btn.classList.remove(
+                            "selected"
+                        );
 
-                });
+                    }
+                );
 
 
             document.getElementById(
@@ -854,3 +1094,5 @@ if (bookingForm) {
 ========================= */
 
 renderCalendar();
+
+loadServices();
