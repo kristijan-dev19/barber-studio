@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prijava - Barber Studio</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        Barber Studio
+    </div>
+
+</header>
+
+
+<section class="login">
+
+    <h1>Prijava vlasnika</h1>
+
+    <div class="login-box">
+
+        <input
+            type="text"
+            id="username"
+            placeholder="Korisničko ime"
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Lozinka"
+        >
+
+        <button type="button" onclick="login()">
+            Prijavi se
+        </button>
+
+        <p id="login-message"></p>
+
+    </div>
+
+</section>
+
+
+<script>
+
+function login() {
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (username === "" || password === "") {
+
+        document.getElementById("login-message").textContent =
+            "Unesite korisničko ime i lozinku.";
+
+        return;
+    }
+
+    // Za sada samo simulacija prijave.
+    // Prava prijava će kasnije biti povezana sa serverom.
+
+    if (username === "vlasnik" && password === "1234") {
+
+        window.location.href = "admin.html";
+
+    } else {
+
+        document.getElementById("login-message").textContent =
+            "Pogrešno korisničko ime ili lozinka.";
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

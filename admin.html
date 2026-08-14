@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Panel - Barber Studio</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="admin-header">
+
+    <div class="logo">
+        Barber Studio
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+        Odjavi se
+    </button>
+
+</header>
+
+
+
+<main class="admin-container">
+
+
+    <!-- NASLOV -->
+
+    <div class="admin-title">
+
+        <p class="admin-label">
+            ADMIN PANEL
+        </p>
+
+        <h1>
+            Dobrodošao, vlasniče
+        </h1>
+
+        <p>
+            Ovde možeš da pratiš rad salona i rezervacije.
+        </p>
+
+    </div>
+
+
+
+    <!-- STATISTIKA -->
+
+    <section class="stats">
+
+
+        <div class="stat-card">
+
+            <span>
+                Rezervacije danas
+            </span>
+
+            <strong id="todayReservations">
+                0
+            </strong>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <span>
+                Ukupno rezervacija
+            </span>
+
+            <strong id="totalReservations">
+                0
+            </strong>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <span>
+                Prihod danas
+            </span>
+
+            <strong id="todayIncome">
+                0 RSD
+            </strong>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <span>
+                Aktivne rezervacije
+            </span>
+
+            <strong id="activeReservations">
+                0
+            </strong>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- REZERVACIJE -->
+
+    <section class="admin-section">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="admin-label">
+                    REZERVACIJE
+                </p>
+
+                <h2>
+                    Sve rezervacije
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>Datum</th>
+
+                        <th>Vreme</th>
+
+                        <th>Klijent</th>
+
+                        <th>Telefon</th>
+
+                        <th>Usluga</th>
+
+                        <th>Cena</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody id="reservationTable">
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+
+        <!-- NEMA REZERVACIJA -->
+
+        <div
+            id="noReservations"
+            style="
+                display:none;
+                text-align:center;
+                padding:40px;
+                color:#888;
+            "
+        >
+
+            Trenutno nema rezervacija.
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- BRZA PODEŠAVANJA -->
+
+    <section class="admin-grid">
+
+
+        <!-- USLUGE -->
+
+        <div class="admin-card">
+
+            <div class="card-icon">
+                ✂
+            </div>
+
+            <h3>
+                Usluge i cenovnik
+            </h3>
+
+            <p>
+                Pregledaj i menjaj usluge koje salon nudi
+                i njihove cene.
+            </p>
+
+            <button
+                class="card-button"
+                onclick="alert('Ovo ćemo napraviti sledeće.')"
+            >
+                Upravljaj uslugama
+            </button>
+
+        </div>
+
+
+
+        <!-- RADNO VREME -->
+
+        <div class="admin-card">
+
+            <div class="card-icon">
+                ◷
+            </div>
+
+            <h3>
+                Radno vreme
+            </h3>
+
+            <p>
+                Podesi dane i vreme kada je salon otvoren
+                za rezervacije.
+            </p>
+
+            <button
+                class="card-button"
+                onclick="alert('Ovo ćemo napraviti sledeće.')"
+            >
+                Podesi radno vreme
+            </button>
+
+        </div>
+
+
+
+        <!-- KONTAKT -->
+
+        <div class="admin-card">
+
+            <div class="card-icon">
+                ☎
+            </div>
+
+            <h3>
+                Kontakt podaci
+            </h3>
+
+            <p>
+                Promeni adresu, telefon i ostale informacije
+                o salonu.
+            </p>
+
+            <button
+                class="card-button"
+                onclick="alert('Ovo ćemo napraviti sledeće.')"
+            >
+                Izmeni podatke
+            </button>
+
+        </div>
+
+
+
+        <!-- GALERIJA -->
+
+        <div class="admin-card">
+
+            <div class="card-icon">
+                ▣
+            </div>
+
+            <h3>
+                Galerija
+            </h3>
+
+            <p>
+                Upravljaj fotografijama i slikama
+                koje se prikazuju na sajtu.
+            </p>
+
+            <button
+                class="card-button"
+                onclick="alert('Ovo ćemo napraviti sledeće.')"
+            >
+                Otvori galeriju
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- INFORMACIJE -->
+
+    <section class="admin-section">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="admin-label">
+                    INFORMACIJE
+                </p>
+
+                <h2>
+                    Podaci o salonu
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="info-grid">
+
+
+            <div class="info-item">
+
+                <span>
+                    Naziv salona
+                </span>
+
+                <strong>
+                    Barber Studio
+                </strong>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <span>
+                    Grad
+                </span>
+
+                <strong>
+                    Kruševac
+                </strong>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <span>
+                    Telefon
+                </span>
+
+                <strong>
+                    060 123 4567
+                </strong>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <span>
+                    Adresa
+                </span>
+
+                <strong>
+                    Centar, Kruševac
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<script>
+
+
+/* =====================================
+   UČITAVANJE REZERVACIJA
+===================================== */
+
+function getReservations() {
+
+    try {
+
+        const data =
+            localStorage.getItem("reservations");
+
+        if (!data) {
+            return [];
+        }
+
+        const reservations =
+            JSON.parse(data);
+
+        if (!Array.isArray(reservations)) {
+            return [];
+        }
+
+        return reservations;
+
+    } catch (error) {
+
+        console.error(
+            "Greška pri učitavanju rezervacija:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+
+/* =====================================
+   FORMAT DATUMA
+===================================== */
+
+function formatDate(date) {
+
+    if (!date) {
+        return "-";
+    }
+
+    const parts =
+        date.split("-");
+
+    if (parts.length !== 3) {
+        return date;
+    }
+
+    return (
+        parts[2] +
+        "." +
+        parts[1] +
+        "." +
+        parts[0] +
+        "."
+    );
+
+}
+
+
+
+/* =====================================
+   UČITAJ ADMIN
+===================================== */
+
+function loadAdmin() {
+
+
+    const reservations =
+        getReservations();
+
+
+    const table =
+        document.getElementById(
+            "reservationTable"
+        );
+
+
+    const noReservations =
+        document.getElementById(
+            "noReservations"
+        );
+
+
+    table.innerHTML = "";
+
+
+
+    /* NEMA REZERVACIJA */
+
+    if (reservations.length === 0) {
+
+        noReservations.style.display =
+            "block";
+
+    } else {
+
+        noReservations.style.display =
+            "none";
+
+    }
+
+
+
+    /* =====================================
+       SORTIRANJE PO DATUMU I VREMENU
+    ===================================== */
+
+    reservations.sort(function(a, b) {
+
+        const first =
+            new Date(
+                a.date +
+                "T" +
+                (a.time || "00:00")
+            );
+
+
+        const second =
+            new Date(
+                b.date +
+                "T" +
+                (b.time || "00:00")
+            );
+
+
+        return first - second;
+
+    });
+
+
+
+    /* =====================================
+       ISPIS REZERVACIJA
+    ===================================== */
+
+    reservations.forEach(function(reservation) {
+
+
+        const row =
+            document.createElement("tr");
+
+
+
+        /*
+         * Nema više čekanja.
+         * Svaka rezervacija je automatski potvrđena.
+         */
+
+        const status =
+            reservation.status === "Otkazano"
+                ? "Otkazano"
+                : "Potvrđeno";
+
+
+
+        let statusClass =
+            "confirmed";
+
+
+        if (status === "Otkazano") {
+
+            statusClass =
+                "cancelled";
+
+        }
+
+
+
+        row.innerHTML = `
+
+            <td>
+                ${formatDate(reservation.date)}
+            </td>
+
+
+            <td>
+
+                <strong>
+                    ${reservation.time || "-"}
+                </strong>
+
+            </td>
+
+
+            <td>
+                ${reservation.name || "-"}
+            </td>
+
+
+            <td>
+                ${reservation.phone || "-"}
+            </td>
+
+
+            <td>
+                ${reservation.service || "-"}
+            </td>
+
+
+            <td>
+                ${(Number(reservation.price) || 0).toLocaleString("sr-RS")} RSD
+            </td>
+
+
+            <td>
+
+                <span class="status ${statusClass}">
+                    ${status}
+                </span>
+
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+
+
+    /* STATISTIKA */
+
+    updateStatistics(reservations);
+
+}
+
+
+
+/* =====================================
+   STATISTIKA
+===================================== */
+
+function updateStatistics(reservations) {
+
+
+    const today =
+        new Date();
+
+
+    const todayString =
+
+        today.getFullYear() +
+        "-" +
+
+        String(
+            today.getMonth() + 1
+        ).padStart(2, "0") +
+
+        "-" +
+
+        String(
+            today.getDate()
+        ).padStart(2, "0");
+
+
+
+    /* =====================================
+       REZERVACIJE DANAS
+    ===================================== */
+
+    const todayReservations =
+        reservations.filter(function(reservation) {
+
+            return (
+
+                reservation.date ===
+                todayString
+
+                &&
+
+                reservation.status !==
+                "Otkazano"
+
+            );
+
+        });
+
+
+
+    /* =====================================
+       AKTIVNE REZERVACIJE
+    ===================================== */
+
+    const activeReservations =
+        reservations.filter(function(reservation) {
+
+            return (
+                reservation.status !==
+                "Otkazano"
+            );
+
+        });
+
+
+
+    /* =====================================
+       PRIHOD DANAS
+    ===================================== */
+
+    let income = 0;
+
+
+    todayReservations.forEach(function(reservation) {
+
+        income +=
+            Number(
+                reservation.price
+            ) || 0;
+
+    });
+
+
+
+    /* =====================================
+       ISPIS STATISTIKE
+    ===================================== */
+
+    document.getElementById(
+        "todayReservations"
+    ).textContent =
+        todayReservations.length;
+
+
+
+    document.getElementById(
+        "totalReservations"
+    ).textContent =
+        reservations.length;
+
+
+
+    document.getElementById(
+        "todayIncome"
+    ).textContent =
+
+        income.toLocaleString(
+            "sr-RS"
+        ) +
+        " RSD";
+
+
+
+    document.getElementById(
+        "activeReservations"
+    ).textContent =
+        activeReservations.length;
+
+}
+
+
+
+/* =====================================
+   ODJAVA
+===================================== */
+
+function logout() {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+
+/* =====================================
+   POKRETANJE
+===================================== */
+
+loadAdmin();
+
+
+</script>
+
+
+</body>
+
+</html>
