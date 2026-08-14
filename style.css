@@ -2440,3 +2440,138 @@ footer{
     }
 
 }
+
+/* =========================================================
+   POPRAVKA MOBILNOG HEADERA
+   Spušta ceo sadržaj ispod navigacije
+========================================================= */
+
+@media (max-width: 768px){
+
+    header{
+        position: relative;
+
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 20px 15px 18px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: flex-start;
+
+        align-items: center;
+
+        gap: 18px;
+
+        background:
+            linear-gradient(
+                to bottom,
+                #080808,
+                #0b0b0b
+            );
+
+        border-bottom: 1px solid rgba(197,157,95,.15);
+    }
+
+
+    .logo{
+        flex-shrink: 0;
+
+        text-align: center;
+
+        font-size: 23px;
+    }
+
+
+    nav{
+        width: 100%;
+
+        display: flex;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 10px 12px;
+    }
+
+
+    nav a{
+        display: block;
+
+        flex-shrink: 0;
+
+        font-size: 13px;
+
+        line-height: 1.2;
+
+        white-space: nowrap;
+    }
+
+
+    nav a:last-child{
+        padding: 9px 15px;
+    }
+
+
+    /* sadržaj počinje tek ispod celog headera */
+
+    .cenovnik,
+    .gallery,
+    .reservation,
+    .my-reservation,
+    .contact{
+        padding-top: 55px;
+    }
+
+}
+
+
+/* =========================================================
+   MANJI TELEFONI
+========================================================= */
+
+@media (max-width: 480px){
+
+    header{
+        padding: 18px 10px 16px;
+
+        gap: 16px;
+    }
+
+
+    .logo{
+        font-size: 21px;
+    }
+
+
+    nav{
+        gap: 9px 10px;
+    }
+
+
+    nav a{
+        font-size: 12px;
+    }
+
+
+    nav a:last-child{
+        padding: 8px 12px;
+    }
+
+
+    .cenovnik,
+    .gallery,
+    .reservation,
+    .my-reservation,
+    .contact{
+        padding-top: 45px;
+    }
+
+}
