@@ -3,12 +3,12 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Moje rezervacije - Barber Studio</title>
+    <title>Moje rezervacije - Barber Studio</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -18,21 +18,38 @@
 
 <header>
 
-<div class="logo">
-Barber Studio
-</div>
+    <div class="logo">
+        Barber Studio
+    </div>
 
 
-<nav>
+    <nav>
 
-<a href="index.html">Početna</a>
-<a href="cenovnik.html">Cenovnik</a>
-<a href="galerija.html">Galerija</a>
-<a href="rezervacija.html">Rezervacija</a>
-<a href="moje-rezervacije.html">Moje rezervacije</a>
-<a href="kontakt.html">Kontakt</a>
+        <a href="index.html">
+            Početna
+        </a>
 
-</nav>
+        <a href="cenovnik.html">
+            Cenovnik
+        </a>
+
+        <a href="galerija.html">
+            Galerija
+        </a>
+
+        <a href="rezervacija.html">
+            Rezervacija
+        </a>
+
+        <a href="moje-rezervacije.html">
+            Moje rezervacije
+        </a>
+
+        <a href="kontakt.html">
+            Kontakt
+        </a>
+
+    </nav>
 
 </header>
 
@@ -40,13 +57,14 @@ Barber Studio
 
 <section class="my-reservation">
 
-<h1>
-Moja rezervacija
-</h1>
+    <h1>
+        Moja rezervacija
+    </h1>
 
 
-<div id="reservationContainer"></div>
+    <div id="reservationContainer">
 
+    </div>
 
 </section>
 
@@ -54,9 +72,9 @@ Moja rezervacija
 
 <footer>
 
-<p>
-© 2026 Barber Studio | Telefon: 060/000-0000
-</p>
+    <p>
+        © 2026 Barber Studio | Telefon: 060/000-0000
+    </p>
 
 </footer>
 
@@ -64,31 +82,264 @@ Moja rezervacija
 
 <script>
 
-let reservation =
-JSON.parse(localStorage.getItem("barberReservation"));
+/* =====================================================
+   MOJA REZERVACIJA
+===================================================== */
+
+function loadMyReservation() {
+
+    let container =
+        document.getElementById(
+            "reservationContainer"
+        );
 
 
-let container =
-document.getElementById("reservationContainer");
+    /* =========================================
+       UČITAVANJE SVIH REZERVACIJA
+    ========================================= */
+
+    let reservations = [];
 
 
-if(!reservation){
+    try {
+
+        reservations =
+            JSON.parse(
+                localStorage.getItem("reservations")
+            ) || [];
+
+    } catch (error) {
+
+        reservations = [];
+
+    }
+
+
+    /* =========================================
+       AKO NEMA REZERVACIJA
+    ========================================= */
+
+    if (
+        !Array.isArray(reservations) ||
+        reservations.length === 0
+    ) {
+
+        showNoReservation();
+
+        return;
+
+    }
+
+
+    /* =========================================
+       UZMI POSLEDNJU REZERVACIJU
+    ========================================= */
+
+    let reservation =
+        reservations[reservations.length - 1];
+
+
+    /* =========================================
+       AKO JE POSLEDNJA OTKAZANA
+    ========================================= */
+
+    if (
+        reservation.status === "Otkazano"
+    ) {
+
+        showNoReservation();
+
+        return;
+
+    }
+
+
+    /* =========================================
+       PRIKAŽI REZERVACIJU
+    ========================================= */
+
+    container.innerHTML = `
+
+        <div class="reservation-card">
+
+
+            <div class="reservation-top">
+
+                <div>
+
+                    <span>
+                        BARBER STUDIO
+                    </span>
+
+                    <h2>
+                        Vaš termin
+                    </h2>
+
+                </div>
+
+
+                <div class="reservation-status confirmed">
+                    Potvrđeno
+                </div>
+
+            </div>
+
+
+
+            <div class="reservation-details">
+
+
+                <div class="reservation-detail">
+
+                    <small>
+                        IME I PREZIME
+                    </small>
+
+                    <strong>
+                        ${escapeHTML(reservation.name)}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="reservation-detail">
+
+                    <small>
+                        TELEFON
+                    </small>
+
+                    <strong>
+                        ${escapeHTML(reservation.phone)}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="reservation-detail">
+
+                    <small>
+                        USLUGA
+                    </small>
+
+                    <strong>
+                        ${escapeHTML(reservation.service)}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="reservation-detail">
+
+                    <small>
+                        DATUM
+                    </small>
+
+                    <strong>
+                        ${formatDate(reservation.date)}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="reservation-detail">
+
+                    <small>
+                        VREME
+                    </small>
+
+                    <strong class="reservation-time">
+                        ${escapeHTML(reservation.time)}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="reservation-detail">
+
+                    <small>
+                        CENA
+                    </small>
+
+                    <strong>
+                        ${Number(reservation.price) || 0} RSD
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="reservation-actions">
+
+
+                <a
+                    href="rezervacija.html"
+                    class="reservation-button"
+                >
+                    Nova rezervacija
+                </a>
+
+
+                <button
+                    type="button"
+                    onclick="cancelReservation(${reservation.id})"
+                    class="cancel-button"
+                >
+                    Otkaži rezervaciju
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   NEMA REZERVACIJE
+===================================================== */
+
+function showNoReservation() {
+
+    let container =
+        document.getElementById(
+            "reservationContainer"
+        );
+
 
     container.innerHTML = `
 
         <div class="no-reservation">
 
+            <div class="reservation-icon">
+                ✂
+            </div>
+
+
             <h2>
-                Nemate rezervaciju
+                Nemate zakazan termin
             </h2>
 
+
             <p>
-                Trenutno nemate zakazan termin.
+                Trenutno nemate aktivnu rezervaciju.
             </p>
+
 
             <a
                 href="rezervacija.html"
-                class="my-reservation-button"
+                class="reservation-button"
             >
                 Zakaži termin
             </a>
@@ -99,102 +350,160 @@ if(!reservation){
 
 }
 
-else{
 
-    container.innerHTML = `
+/* =====================================================
+   OTKAZIVANJE
+===================================================== */
 
-        <div class="my-reservation-card">
+function cancelReservation(id) {
 
-            <h2>
-                Vaš termin
-            </h2>
-
-
-            <div class="my-reservation-item">
-
-                <span>
-                    Ime i prezime
-                </span>
-
-                <strong>
-                    ${reservation.name}
-                </strong>
-
-            </div>
+    let confirmed =
+        confirm(
+            "Da li ste sigurni da želite da otkažete rezervaciju?"
+        );
 
 
-            <div class="my-reservation-item">
+    if (!confirmed) {
 
-                <span>
-                    Telefon
-                </span>
+        return;
 
-                <strong>
-                    ${reservation.phone}
-                </strong>
-
-            </div>
+    }
 
 
-            <div class="my-reservation-item">
-
-                <span>
-                    Usluga
-                </span>
-
-                <strong>
-                    ${reservation.service}
-                </strong>
-
-            </div>
+    let reservations = [];
 
 
-            <div class="my-reservation-item">
+    try {
 
-                <span>
-                    Datum
-                </span>
+        reservations =
+            JSON.parse(
+                localStorage.getItem("reservations")
+            ) || [];
 
-                <strong>
-                    ${reservation.date}
-                </strong>
+    } catch (error) {
 
-            </div>
+        reservations = [];
 
-
-            <div class="my-reservation-item">
-
-                <span>
-                    Vreme
-                </span>
-
-                <strong class="my-reservation-time">
-                    ${reservation.time}
-                </strong>
-
-            </div>
+    }
 
 
-            <div class="my-reservation-status">
-                ${reservation.status}
-            </div>
+    /* =========================================
+       PRONAĐI REZERVACIJU
+    ========================================= */
+
+    let reservation =
+        reservations.find(
+            function(item) {
+
+                return item.id === id;
+
+            }
+        );
 
 
-            <a
-                href="rezervacija.html"
-                class="my-reservation-button"
-            >
-                Nova rezervacija
-            </a>
+    if (!reservation) {
 
-        </div>
+        return;
 
-    `;
+    }
+
+
+    /* =========================================
+       OZNAČI KAO OTKAZANO
+    ========================================= */
+
+    reservation.status =
+        "Otkazano";
+
+
+    localStorage.setItem(
+        "reservations",
+        JSON.stringify(reservations)
+    );
+
+
+    /* =========================================
+       OSVEŽI STRANICU
+    ========================================= */
+
+    loadMyReservation();
 
 }
+
+
+/* =====================================================
+   FORMAT DATUMA
+===================================================== */
+
+function formatDate(date) {
+
+    if (!date) {
+
+        return "-";
+
+    }
+
+
+    let parts =
+        date.split("-");
+
+
+    if (parts.length !== 3) {
+
+        return date;
+
+    }
+
+
+    return (
+        parts[2] +
+        "." +
+        parts[1] +
+        "." +
+        parts[0] +
+        "."
+    );
+
+}
+
+
+/* =====================================================
+   ZAŠTITA TEKSTA
+===================================================== */
+
+function escapeHTML(value) {
+
+    if (value === undefined || value === null) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   POKRETANJE
+===================================================== */
+
+loadMyReservation();
 
 </script>
 
 
 </body>
+
 </html>
