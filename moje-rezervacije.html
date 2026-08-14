@@ -45,9 +45,7 @@ Moja rezervacija
 </h1>
 
 
-<div id="reservationContainer">
-
-</div>
+<div id="reservationContainer"></div>
 
 
 </section>
@@ -67,12 +65,11 @@ Moja rezervacija
 <script>
 
 let reservation =
-    JSON.parse(localStorage.getItem("barberReservation"));
+JSON.parse(localStorage.getItem("barberReservation"));
 
 
 let container =
-    document.getElementById("reservationContainer");
-
+document.getElementById("reservationContainer");
 
 
 if(!reservation){
@@ -81,21 +78,17 @@ if(!reservation){
 
         <div class="no-reservation">
 
-            <div class="reservation-icon">
-                ✂
-            </div>
-
             <h2>
-                Nemate zakazan termin
+                Nemate rezervaciju
             </h2>
 
             <p>
-                Trenutno nemate aktivnu rezervaciju.
+                Trenutno nemate zakazan termin.
             </p>
 
             <a
                 href="rezervacija.html"
-                class="reservation-button"
+                class="my-reservation-button"
             >
                 Zakaži termin
             </a>
@@ -105,145 +98,98 @@ if(!reservation){
     `;
 
 }
+
 else{
 
     container.innerHTML = `
 
-        <div class="reservation-card">
+        <div class="my-reservation-card">
 
-            <div class="reservation-top">
+            <h2>
+                Vaš termin
+            </h2>
 
-                <div>
 
-                    <span>
-                        BARBER STUDIO
-                    </span>
+            <div class="my-reservation-item">
 
-                    <h2>
-                        Vaš termin
-                    </h2>
+                <span>
+                    Ime i prezime
+                </span>
 
-                </div>
-
-                <div class="reservation-status">
-                    ${reservation.status}
-                </div>
+                <strong>
+                    ${reservation.name}
+                </strong>
 
             </div>
 
 
-            <div class="reservation-details">
+            <div class="my-reservation-item">
 
+                <span>
+                    Telefon
+                </span>
 
-                <div class="reservation-detail">
-
-                    <small>
-                        IME I PREZIME
-                    </small>
-
-                    <strong>
-                        ${reservation.name}
-                    </strong>
-
-                </div>
-
-
-                <div class="reservation-detail">
-
-                    <small>
-                        TELEFON
-                    </small>
-
-                    <strong>
-                        ${reservation.phone}
-                    </strong>
-
-                </div>
-
-
-                <div class="reservation-detail">
-
-                    <small>
-                        USLUGA
-                    </small>
-
-                    <strong>
-                        ${reservation.service}
-                    </strong>
-
-                </div>
-
-
-                <div class="reservation-detail">
-
-                    <small>
-                        DATUM
-                    </small>
-
-                    <strong>
-                        ${reservation.date}
-                    </strong>
-
-                </div>
-
-
-                <div class="reservation-detail">
-
-                    <small>
-                        VREME
-                    </small>
-
-                    <strong class="reservation-time">
-                        ${reservation.time}
-                    </strong>
-
-                </div>
-
+                <strong>
+                    ${reservation.phone}
+                </strong>
 
             </div>
 
 
-            <div class="reservation-actions">
+            <div class="my-reservation-item">
 
-                <a
-                    href="rezervacija.html"
-                    class="reservation-button"
-                >
-                    Nova rezervacija
-                </a>
+                <span>
+                    Usluga
+                </span>
 
-
-                <button
-                    onclick="cancelReservation()"
-                    class="cancel-button"
-                >
-                    Otkaži rezervaciju
-                </button>
+                <strong>
+                    ${reservation.service}
+                </strong>
 
             </div>
 
+
+            <div class="my-reservation-item">
+
+                <span>
+                    Datum
+                </span>
+
+                <strong>
+                    ${reservation.date}
+                </strong>
+
+            </div>
+
+
+            <div class="my-reservation-item">
+
+                <span>
+                    Vreme
+                </span>
+
+                <strong class="my-reservation-time">
+                    ${reservation.time}
+                </strong>
+
+            </div>
+
+
+            <div class="my-reservation-status">
+                ${reservation.status}
+            </div>
+
+
+            <a
+                href="rezervacija.html"
+                class="my-reservation-button"
+            >
+                Nova rezervacija
+            </a>
 
         </div>
 
     `;
-}
-
-
-
-function cancelReservation(){
-
-    let confirmed =
-        confirm(
-            "Da li ste sigurni da želite da otkažete rezervaciju?"
-        );
-
-
-    if(confirmed){
-
-        localStorage.removeItem("barberReservation");
-
-        location.reload();
-    }
 
 }
 
