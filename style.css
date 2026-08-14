@@ -1935,3 +1935,30 @@ footer{
         font-size:42px;
     }
 }
+
+.map-button{
+    display:inline-block;
+
+    margin-top:20px;
+
+    padding:13px 28px;
+
+    background:#c59d5f;
+    color:#000;
+
+    text-decoration:none;
+
+    border-radius:30px;
+
+    font-size:14px;
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.map-button:hover{
+    background:#fff;
+    color:#000;
+
+    transform:translateY(-2px);
+}
