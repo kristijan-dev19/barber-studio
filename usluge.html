@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Usluge i cenovnik - Admin</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header class="admin-header">
+
+    <div class="logo">
+        Barber Studio
+    </div>
+
+    <button
+        class="logout-btn"
+        onclick="window.location.href='admin.html'"
+    >
+        Nazad
+    </button>
+
+</header>
+
+
+<main class="admin-container">
+
+    <div class="admin-title">
+
+        <p class="admin-label">
+            ADMIN PANEL
+        </p>
+
+        <h1>
+            Usluge i cenovnik
+        </h1>
+
+        <p>
+            Ovde možeš da dodaješ, menjaš i brišeš usluge.
+        </p>
+
+    </div>
+
+
+    <!-- DODAVANJE USLUGE -->
+
+    <section class="admin-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="admin-label">
+                    NOVA USLUGA
+                </p>
+
+                <h2>
+                    Dodaj uslugu
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="service-form">
+
+            <input
+                type="text"
+                id="serviceName"
+                placeholder="Naziv usluge"
+            >
+
+            <input
+                type="number"
+                id="servicePrice"
+                placeholder="Cena u RSD"
+                min="0"
+            >
+
+            <button
+                class="card-button"
+                onclick="addService()"
+            >
+                Dodaj uslugu
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- POSTOJEĆE USLUGE -->
+
+    <section class="admin-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="admin-label">
+                    CENOVNIK
+                </p>
+
+                <h2>
+                    Postojeće usluge
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div id="servicesContainer"></div>
+
+    </section>
+
+
+</main>
+
+
+<script>
+
+const defaultServices = [
+
+    {
+        id: 1,
+        name: "Klasično šišanje",
+        price: 700
+    },
+
+    {
+        id: 2,
+        name: "Buzz Cut",
+        price: 800
+    },
+
+    {
+        id: 3,
+        name: "Fade Cut",
+        price: 1000
+    },
+
+    {
+        id: 4,
+        name: "Dečije šišanje",
+        price: 500
+    },
+
+    {
+        id: 5,
+        name: "Šišanje penzioner",
+        price: 500
+    }
+
+];
+
+
+function getServices() {
+
+    let services =
+        localStorage.getItem("barberServices");
+
+    if (!services) {
+
+        localStorage.setItem(
+            "barberServices",
+            JSON.stringify(defaultServices)
+        );
+
+        return defaultServices;
+
+    }
+
+    try {
+
+        let parsed =
+            JSON.parse(services);
+
+        if (!Array.isArray(parsed)) {
+            return defaultServices;
+        }
+
+        return parsed;
+
+    } catch (error) {
+
+        return defaultServices;
+
+    }
+
+}
+
+
+function saveServices(services) {
+
+    localStorage.setItem(
+        "barberServices",
+        JSON.stringify(services)
+    );
+
+}
+
+
+function renderServices() {
+
+    const container =
+        document.getElementById(
+            "servicesContainer"
+        );
+
+    const services =
+        getServices();
+
+    container.innerHTML = "";
+
+
+    if (services.length === 0) {
+
+        container.innerHTML = `
+            <p>
+                Trenutno nema usluga.
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    services.forEach(function(service) {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "admin-card";
+
+
+        card.innerHTML = `
+
+            <h3>
+                ${service.name}
+            </h3>
+
+            <p>
+                Cena:
+                <strong>
+                    ${Number(service.price).toLocaleString("sr-RS")} RSD
+                </strong>
+            </p>
+
+            <div style="
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
+
+                <button
+                    class="card-button"
+                    onclick="editService(${service.id})"
+                >
+                    Izmeni
+                </button>
+
+                <button
+                    class="card-button"
+                    onclick="deleteService(${service.id})"
+                >
+                    Obriši
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+function addService() {
+
+    const nameInput =
+        document.getElementById(
+            "serviceName"
+        );
+
+    const priceInput =
+        document.getElementById(
+            "servicePrice"
+        );
+
+
+    const name =
+        nameInput.value.trim();
+
+    const price =
+        Number(priceInput.value);
+
+
+    if (!name) {
+
+        alert(
+            "Unesite naziv usluge."
+        );
+
+        return;
+
+    }
+
+
+    if (!price || price <= 0) {
+
+        alert(
+            "Unesite ispravnu cenu."
+        );
+
+        return;
+
+    }
+
+
+    const services =
+        getServices();
+
+
+    services.push({
+
+        id: Date.now(),
+
+        name: name,
+
+        price: price
+
+    });
+
+
+    saveServices(services);
+
+
+    nameInput.value = "";
+    priceInput.value = "";
+
+
+    renderServices();
+
+
+    alert(
+        "Usluga je uspešno dodata."
+    );
+
+}
+
+
+function editService(id) {
+
+    const services =
+        getServices();
+
+
+    const service =
+        services.find(function(item) {
+
+            return item.id === id;
+
+        });
+
+
+    if (!service) {
+        return;
+    }
+
+
+    const newName =
+        prompt(
+            "Unesite novi naziv usluge:",
+            service.name
+        );
+
+
+    if (newName === null) {
+        return;
+    }
+
+
+    const cleanName =
+        newName.trim();
+
+
+    if (!cleanName) {
+
+        alert(
+            "Naziv usluge ne može biti prazan."
+        );
+
+        return;
+
+    }
+
+
+    const newPrice =
+        prompt(
+            "Unesite novu cenu:",
+            service.price
+        );
+
+
+    if (newPrice === null) {
+        return;
+    }
+
+
+    const price =
+        Number(newPrice);
+
+
+    if (!price || price <= 0) {
+
+        alert(
+            "Cena nije ispravna."
+        );
+
+        return;
+
+    }
+
+
+    service.name =
+        cleanName;
+
+    service.price =
+        price;
+
+
+    saveServices(services);
+
+    renderServices();
+
+
+    alert(
+        "Usluga je uspešno izmenjena."
+    );
+
+}
+
+
+function deleteService(id) {
+
+    const services =
+        getServices();
+
+
+    const service =
+        services.find(function(item) {
+
+            return item.id === id;
+
+        });
+
+
+    if (!service) {
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            'Da li ste sigurni da želite da obrišete uslugu "' +
+            service.name +
+            '"?'
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const newServices =
+        services.filter(function(item) {
+
+            return item.id !== id;
+
+        });
+
+
+    saveServices(newServices);
+
+    renderServices();
+
+
+    alert(
+        "Usluga je obrisana."
+    );
+
+}
+
+
+renderServices();
+
+</script>
+
+
+</body>
+
+</html>
+```
